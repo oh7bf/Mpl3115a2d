@@ -454,6 +454,8 @@ int main()
                 logmessage(logfile,message,loglev,4);
                 write_temp(temperature);
                 write_pres(pressure);
+// optional storage to local database
+//                ok=system("/usr/sbin/insert-mpl3115a2d.sh");
                 cont=1;
               }
             }
@@ -524,6 +526,8 @@ int main()
                 logmessage(logfile,message,loglev,4);
                 write_temp(temperature);
                 write_alt(altitude);
+// optional storage to local database
+//              ok=system("/usr/sbin/insert-mpl3115a2d.sh");
                 cont=1;
               }
             }
