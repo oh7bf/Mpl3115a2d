@@ -11,7 +11,7 @@
 # 
 # c) sudo ./install (this script)
 #
-# d) sudo modprobe i2c-bcm2708; sudo modprobe i2c-dev
+# d) sudo raspi-config (to enable I2C) 
 #
 # e) sudo service mpl3115a2d start
 # 
@@ -25,11 +25,12 @@
 # /etc/init.d/mpl3115a2d                - init script
 # /etc/logrotate.d/mpl3115a2d           - log rotation file
 # /etc/mpl3115a2d_config                - configuration file
-# /usr/share/man                        - manual pages
-# /usr/sbin/mpl3115a2d                  - temperature reading daemon
+# /usr/share/man/man1/mpl3115a2d.1      - manual page
+# /usr/sbin/mpl3115a2d                  - pressure reading daemon
+# /var/lib/mpl3115a2d/                  - live pressure data
 #
 # Wed Dec 10 21:11:32 CET 2014
-# Edit: 
+# Edit: Tue Feb 10 19:55:05 CET 2015
 # 
 # Jaakko Koivuniemi
 #
@@ -48,9 +49,6 @@ MANDIR=/usr/share/man/man1
 
 # mpl3115a2d.log log rotation  
 LOGROTADIR=/etc/logrotate.d
-
-# automatic loading of modules
-MODPROBEDIR=/etc/modprobe.d
 
 # init script
 INITDIR=/etc/init.d
@@ -118,32 +116,6 @@ if [ -d /var/lib/mpl3115a2d ]; then
 else
   echo "Create directory /var/lib/mpl3115a2d"
   /bin/mkdir -m 775 /var/lib/mpl3115a2d
-fi
-
-if /bin/grep -Fxq "i2c-bcm2708" /etc/modules
-then
-  echo "i2c-bcm2708 found from /etc/modules"
-else
-  echo "Add i2c-bcm2708 to /etc/modules"
-  echo "i2c-bcm2708" >> /etc/modules
-fi
-
-if /bin/grep -Fxq "i2c-dev" /etc/modules
-then
-  echo "i2c-dev found from /etc/modules"
-else
-  echo "Add i2c-dev to /etc/modules"
-  echo "i2c-dev" >> /etc/modules
-fi
-
-if /bin/grep -Fxq "#blacklist i2c-bcm2708" /etc/modprobe.d/raspi-blacklist.conf
-then
-  echo "black listing of i2c-bcm2708 already removed"
-else
-  echo "remove black listing of i2c-bcm2708"
-  /bin/cp /etc/modprobe.d/raspi-blacklist.conf /etc/modprobe.d/raspi-blacklist.conf.old
-  /bin/sed "s/blacklist i2c-bcm2708/#blacklist i2c-bcm2708/g" /etc/modprobe.d/raspi-blacklist.conf > /etc/modprobe.d/raspi-blacklist.conf.new
-  /bin/mv /etc/modprobe.d/raspi-blacklist.conf.new /etc/modprobe.d/raspi-blacklist.conf 
 fi
 
 echo "Run 'update-rc.d mpl3115a2d defaults' to automatically start at boot time"
