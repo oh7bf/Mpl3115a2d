@@ -23,14 +23,13 @@
 # The directories used and files created by this script:
 #
 # /etc/init.d/mpl3115a2d                - init script
-# /etc/logrotate.d/mpl3115a2d           - log rotation file
 # /etc/mpl3115a2d_config                - configuration file
 # /usr/share/man/man1/mpl3115a2d.1      - manual page
 # /usr/sbin/mpl3115a2d                  - pressure reading daemon
 # /var/lib/mpl3115a2d/                  - live pressure data
 #
 # Wed Dec 10 21:11:32 CET 2014
-# Edit: Tue Feb 10 19:55:05 CET 2015
+# Edit: Sun May 31 21:28:43 CEST 2015
 # 
 # Jaakko Koivuniemi
 #
@@ -86,14 +85,6 @@ if [ -d $SOURCEMAN ]; then
   done
 else
   echo "Source directory ${SOURCEMAN} does not exist"
-fi
-
-if [ ! -r ${LOGROTADIR}/mpl3115a2d ]; then
-  echo "Write log rotation file ${LOGROTADIR}/mpl3115a2d"
-  /usr/bin/install -C -m 644 ${SOURCEDIR}/mpl3115a2d.lrota ${LOGROTADIR}
-  /bin/mv ${LOGROTADIR}/mpl3115a2d.lrota ${LOGROTADIR}/mpl3115a2d
-else
-  echo "Log rotation file ${LOGROTADIR}/mpl3115a2d already exists"
 fi
 
 if [ ! -x ${INITDIR}/mpl3115a2d ]; then
