@@ -5,7 +5,7 @@
 #
 # Installation:
 #
-# a) make
+# a) cd src; make
 # 
 # b) cd doc; ./mkmpl3115a2d
 # 
@@ -38,7 +38,7 @@
 
 # source directory for 'Mpl3115a2d'
 SOURCEDIR=${PWD}
-SOURCEBIN=${SOURCEDIR}/
+SOURCEBIN=${SOURCEDIR}/src
 SOURCEMAN=${SOURCEDIR}/doc
 
 # binary executables 

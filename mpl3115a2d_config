@@ -1,12 +1,16 @@
 #
 # Example configuration file for mpl3115a2d 
 # Wed Dec 10 21:09:38 CET 2014
-# Edit: 
+# Edit: Sun May 31 09:52:00 CEST 2015
 # Jaakko Koivuniemi
 
-# log level 0=debug messages, 1=system commands, 2=operation messages, 
-# 3=status messages, 4=errors/warnings
-LOGLEVEL 3
+# log level, see syslog(3) 
+# 2=critical condition, 3=error condition, 4=warning condition, 
+# 5=significant condition, 6=information, 7=debugging
+LOGLEVEL 5
+
+# store data to local SQLite database
+# DBSQLITE /tmp/test.db
 
 # pressure and temperature measurement interval [s]
 PRESINT 300
