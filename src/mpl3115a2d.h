@@ -30,9 +30,6 @@
 #define MPL3115A2D_OUT_T_LSB 0x05
 #define MPL3115A2D_DR_STATUS 0x06
 
-
-
-
 extern const char *i2cdev;// i2c device
 extern int loglev; // log level
 extern int cont; // main loop flag
