@@ -1,7 +1,8 @@
 #
 # Example configuration file for mpl3115a2d 
 # Wed Dec 10 21:09:38 CET 2014
-# Edit: Sun May 31 09:52:00 CEST 2015
+# Edit: Tue Jun  9 21:53:32 CEST 2015
+# 
 # Jaakko Koivuniemi
 
 # log level, see syslog(3) 

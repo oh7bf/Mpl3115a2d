@@ -9,7 +9,11 @@ B<mpl3115a2d>
 =head1 DESCRIPTION
 
 The B<mpl3115a2d> is used to read pressure and temperature data from 
-MPL3115A2D on Raspberry Pi using i2c bus. The daemon is started with command 
+MPL3115A2D on Raspberry Pi using i2c bus. The temperature and pressure are
+written to /var/lib/mpl3115a2d and optionally inserted to local SQLite3
+database.
+
+The daemon is started with command 
 
 B<service> I<mpl3115a2d> I<start>
 
@@ -22,8 +26,6 @@ The operation of the daemon can be checked from the log file.
 =head1 FILES
 
 I</etc/mpl3115a2d_config>             Configuration file. 
-
-I</etc/logrotate.d/mpl3115a2d>        Log rotation configuration file.
 
 I</etc/init.d/mpl3115a2d>             Init script.
 

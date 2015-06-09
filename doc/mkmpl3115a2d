@@ -1,2 +1,2 @@
 #!/bin/bash
-pod2man -c "Raspberry Pi" -r "version 20141213" mpl3115a2d.pod mpl3115a2d.1
+pod2man -c "Raspberry Pi" -r "version 20150609" mpl3115a2d.pod mpl3115a2d.1

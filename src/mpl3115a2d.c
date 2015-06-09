@@ -20,7 +20,7 @@
  ****************************************************************************
  *
  * Wed Dec 10 21:17:05 CET 2014
- * Edit: Sun May 31 20:20:20 CEST 2015
+ * Edit: Tue Jun  9 21:20:54 CEST 2015
  *
  * Jaakko Koivuniemi
  **/
@@ -28,8 +28,10 @@
 #include "mpl3115a2d.h"
 #include "I2cWriteRegister.h"
 #include "I2cRReadRegBytes.h"
+#include "ReadSQLiteTime.h"
+#include "InsertSQLite.h"
 
-const int version=20150531; // program version
+const int version=20150609; // program version
 int presint=300; // pressure measurement interval [s]
 int altint=0; // altitude measurement interval [s]
 
@@ -40,6 +42,10 @@ unsigned short refpres=0; // reference pressure [0-65535]
 const char adatafile[200]="/var/lib/mpl3115a2d/altitude";
 const char pdatafile[200]="/var/lib/mpl3115a2d/pressure";
 const char tdatafile[200]="/var/lib/mpl3115a2d/temperature";
+
+// local SQLite database file
+int dbsqlite=0; // store data to local SQLite database
+char dbfile[ SQLITEFILENAME_SIZE ];
 
 const char *i2cdev = "/dev/i2c-1";
 
@@ -74,6 +80,15 @@ void read_config()
              sprintf(message,"Log level set to %d",(int)value);
              syslog(LOG_INFO|LOG_DAEMON, "%s", message);
              setlogmask(LOG_UPTO (loglev));
+          }
+          if(strncmp(par,"DBSQLITE",8)==0)
+          {
+            if(sscanf(line,"%s %s",par,dbfile)!=EOF)  
+            {
+              dbsqlite=1;
+              sprintf(message, "Store data to database %s", dbfile);
+              syslog(LOG_INFO|LOG_DAEMON, "%s", message);
+            }
           }
           if(strncmp(par,"ALTINT",7)==0)
           {
@@ -270,6 +285,9 @@ int main()
   unsigned int A = 0;
   unsigned char buffer[10];
 
+  const char query[ SQLITEQUERY_SIZE ] = "insert into mpl3115a2d (name,temperature,pressure,altitude) values (?,?,?,?)";  
+  double data[ SQLITE_DOUBLES ];
+
   while( cont == 1 )
   {
     unxs = (int)time(NULL); 
@@ -300,6 +318,13 @@ int main()
 
           write_temp(temperature);
           write_pres(pressure);
+
+          data[0] = temperature;
+          data[1] = pressure;
+          data[2] = 0;
+
+          if(dbsqlite==1) InsertSQLite(dbfile, query, "p1", 3, data);
+
           cont = 1;
         }
         else
@@ -335,6 +360,13 @@ int main()
 
           write_temp(temperature);
           write_alt(altitude);
+
+          data[0] = temperature;
+          data[1] = 0;
+          data[2] = altitude;
+
+          if(dbsqlite==1) InsertSQLite(dbfile, query, "a1", 3, data);
+
           cont = 1;
         }
         else

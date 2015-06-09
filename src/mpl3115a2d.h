@@ -30,6 +30,11 @@
 #define MPL3115A2D_OUT_T_LSB 0x05
 #define MPL3115A2D_DR_STATUS 0x06
 
+#define SENSORNAME_SIZE 20
+#define SQLITEFILENAME_SIZE 200
+#define SQLITEQUERY_SIZE 200
+#define SQLITE_DOUBLES 10 
+
 extern const char *i2cdev;// i2c device
 extern int loglev; // log level
 extern int cont; // main loop flag
