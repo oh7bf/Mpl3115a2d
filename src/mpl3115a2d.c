@@ -20,7 +20,7 @@
  ****************************************************************************
  *
  * Wed Dec 10 21:17:05 CET 2014
- * Edit: Tue Jun  9 21:20:54 CEST 2015
+ * Edit: Wed Jun 10 20:17:00 CEST 2015
  *
  * Jaakko Koivuniemi
  **/
@@ -31,7 +31,7 @@
 #include "ReadSQLiteTime.h"
 #include "InsertSQLite.h"
 
-const int version=20150609; // program version
+const int version=20150610; // program version
 int presint=300; // pressure measurement interval [s]
 int altint=0; // altitude measurement interval [s]
 
@@ -270,6 +270,15 @@ int main()
 
   fprintf(pidf, "%d\n", getpid());
   fclose(pidf);
+
+  if( dbsqlite == 1 )
+  {
+    if( ReadSQLiteTime( dbfile ) == 0 ) 
+    {
+      syslog(LOG_ERR|LOG_DAEMON, "SQLite database read failed, drop database connection");
+      dbsqlite=0; 
+    }
+  }
 
   unsigned char msb,lsb;
   if( refpres > 0 )
