@@ -285,8 +285,8 @@ int main()
   {
     msb = (unsigned char)(refpres>>8);
     lsb = (unsigned char)(refpres&0x00FF);
-    ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x14, msb);
-    ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x15, lsb);
+    ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x14, msb);
+    ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x15, lsb);
   }
 
   short T = 0;
@@ -304,15 +304,15 @@ int main()
     if((( unxs >= nxtpres )||( (nxtpres-unxs) > presint ))&&( presint > 10 )) 
     {
       nxtpres = presint + unxs;
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x26, 0x38);
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x13, 0x07);
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x26, 0x39);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x26, 0x38);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x13, 0x07);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x26, 0x39);
 
       if(cont==1)
       {
         usleep(500000);
 
-        if( I2cRReadRegBytes(MPL3115A2D_ADDRESS, MPL3115A2D_STATUS, buffer, 6) == 1 )
+        if( I2cRReadRegBytes(MPL3115A2_ADDRESS, MPL3115A2_STATUS, buffer, 6) == 1 )
         {
           T = ((short)buffer[4])<<8;
           T |= (short)buffer[5];
@@ -346,15 +346,15 @@ int main()
     if(((unxs>=nxtalt)||((nxtalt-unxs)>altint))&&(altint>10)) 
     {
       nxtalt=altint+unxs;
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x26, 0xB8);
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x13, 0x07);
-      ok = I2cWriteRegister(MPL3115A2D_ADDRESS, 0x26, 0xB9);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x26, 0xB8);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x13, 0x07);
+      ok = I2cWriteRegister(MPL3115A2_ADDRESS, 0x26, 0xB9);
 
       if( cont == 1 )
       {
         usleep(500000);
 
-        if( I2cRReadRegBytes(MPL3115A2D_ADDRESS, MPL3115A2D_STATUS, buffer, 6) == 1 )
+        if( I2cRReadRegBytes(MPL3115A2_ADDRESS, MPL3115A2_STATUS, buffer, 6) == 1 )
         {
           T = ((short)buffer[4])<<8;
           T |= (short)buffer[5];
